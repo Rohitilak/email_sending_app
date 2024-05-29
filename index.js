@@ -8,21 +8,22 @@ const app = express();
 //     port: 587,
 //     secure: false, // Use `true` for port 465, `false` for all other ports
 //     auth: {
-//       user:"rohittilak086@gmail.com",
-//       pass: "password",
+//       user: process.env.Email,
+//       pass: process.env.password,
 //     },
 //   });
 
 app.use(express.urlencoded())
 
 const transporter = nodemailer.createTransport({
-    host: "localhost",
-    port: 1025,
-    secure: false, // Use `true` for port 465, `false` for all other ports
-    // auth: {
-    //   user:"rohittilak086@gmail.com",
-    //   pass: "password",
-    // },
+  service : "gmail",
+  host: "smtp.gmail.com", // Replace with your provider's SMTP server
+  port: 	465, // Port may vary depending on your provider
+  secure:  true,// Use `true` for port 465, `false` for all other ports
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
   });
 
 
@@ -103,7 +104,7 @@ app.post('/send-email', (req, res) => {
     const data = req.body
     console.log(data);
     const mailOptions = {
-        from: 'do-not-reply@gmail.com', // Replace with your email address
+        from: 'rohittilak086@gmail.com', // Replace with your email address
         to: req.body.email, // Replace with the recipient's email address
         subject: req.body.subject, // Replace with your desired subject
         // text: 'This is a plain text email body.', // Plain text content
@@ -119,7 +120,6 @@ app.post('/send-email', (req, res) => {
           res.send("send success!");
         }
       });
-
 })
 
 
